@@ -7,12 +7,23 @@
 
 import Foundation
 
-struct Model: Codable {
-    let id: Int
-    let month: String
+struct Models: Codable {
+    
+    let models: [Model]
     
     enum CodingKeys: String, CodingKey {
-        case id = "Codigo"
-        case month = "Mes"
+        case models = "Modelos"
+    }
+    
+}
+
+struct Model: Codable {
+    
+    let id: Int
+    let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "Value"
+        case name = "Label"
     }
 }

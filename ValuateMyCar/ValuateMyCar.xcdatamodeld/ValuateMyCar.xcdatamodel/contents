@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Car" representedClassName=".Car" syncable="YES">
+        <attribute name="brandId" optional="YES" attributeType="String"/>
+        <attribute name="carImage" optional="YES" attributeType="Transformable"/>
+        <attribute name="modelId" optional="YES" attributeType="String"/>
+        <attribute name="nickname" optional="YES" attributeType="String"/>
+        <attribute name="yearModelId" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="Car" positionX="25.857421875" positionY="109.0003356933594" width="128" height="104"/>
+    </elements>
 </model>

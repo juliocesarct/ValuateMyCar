@@ -13,8 +13,12 @@ class AddNewViewController: UIViewController {
     private var addNewVM = AddNewViewModel()
     private var cancellables = Set<AnyCancellable>()
     private var brands: [String] = []
-    private var models: [String] = ["Focus","Fiesta","Fusion"]
-    private var years: [String] = ["2022","2021","2020"]
+    private var models: [String] = []
+    private var years: [String] = []
+    
+    private var brandIndexSelected: Int = -1
+    private var modelIndexSelected: Int = -1
+    private var yearIndexSelected: Int = -1
     
     private lazy var picker: UIPickerView = {
         let element = UIPickerView()
@@ -36,7 +40,7 @@ class AddNewViewController: UIViewController {
     private lazy var roundedImage: UIImageView = {
         let element = UIImageView()
         let image = UIImage(systemName: "car.fill")?.withRenderingMode(.alwaysTemplate)
-        element.backgroundColor = UIColor(named: "ElementArea")
+        element.backgroundColor = UIColor(named: "Background")
         element.translatesAutoresizingMaskIntoConstraints = false
         element.contentMode = .scaleAspectFit
         element.tintColor = UIColor(named: "ElementColor")
@@ -61,6 +65,7 @@ class AddNewViewController: UIViewController {
         element.textAlignment = .center
         element.layer.cornerRadius = 5
         element.backgroundColor = UIColor(named: "Background")
+        element.text = ""
         return element
     }()
     
@@ -81,7 +86,7 @@ class AddNewViewController: UIViewController {
     private lazy var modelTextField: UITextField = {
         let element = UITextField()
         element.translatesAutoresizingMaskIntoConstraints = false
-        element.placeholder = "Model"
+        element.placeholder = "-"
         element.textAlignment = .center
         element.layer.cornerRadius = 5
         element.backgroundColor = UIColor(named: "Background")
@@ -95,7 +100,7 @@ class AddNewViewController: UIViewController {
     private lazy var yearTextField: UITextField = {
         let element = UITextField()
         element.translatesAutoresizingMaskIntoConstraints = false
-        element.placeholder = "Year"
+        element.placeholder = "-"
         element.textAlignment = .center
         element.layer.cornerRadius = 5
         element.backgroundColor = UIColor(named: "Background")
@@ -117,7 +122,7 @@ class AddNewViewController: UIViewController {
         element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
         element.backgroundColor = UIColor(named: "ElementColor")
         element.isEnabled = false
-        //element.addTarget(self, action: #selector(navigateToPage), for: .touchUpInside)
+        element.addTarget(self, action: #selector(navigateToPage), for: .touchUpInside)
         return element
     }()
     
@@ -125,6 +130,14 @@ class AddNewViewController: UIViewController {
         super.viewDidLoad()
         setup()
         setupBinding()
+    }
+    
+    @objc func navigateToPage() {
+
+        let detailVC = DetailViewController()
+        detailVC.car = addNewVM.car
+        navigationController?.popViewController(animated: false)
+        navigationController?.pushViewController(detailVC ,animated: true)
     }
     
 }
@@ -139,17 +152,44 @@ extension AddNewViewController {
     
     @objc func done(){
         
+        let selectedIndex = picker.selectedRow(inComponent: 0)
+        picker.selectRow(0, inComponent: 0, animated: true)
+        
         if brandTextField.isFirstResponder{
-            brandTextField.text = brands[picker.selectedRow(inComponent: 0)]
+            
+            brandIndexSelected = selectedIndex
+            
+            if nicknameTextField.text!.isEmpty{
+                nicknameTextField.text = "My \(brands[brandIndexSelected])"
+            }
+            
+            brandTextField.text = brands[brandIndexSelected]
+            yearTextField.text = ""
             modelTextField.text = ""
-            yearTextField.text = ""
+            
             modelTextField.isEnabled = true
+            addNewVM.getModelsByBrand(brand: addNewVM.brands[brandIndexSelected])
+            modelTextField.placeholder = "Loading models..."
+            
         } else if modelTextField.isFirstResponder{
-            modelTextField.text = models[picker.selectedRow(inComponent: 0)]
+            
+            modelIndexSelected = selectedIndex
+            
+            modelTextField.text = models[modelIndexSelected]
             yearTextField.text = ""
+            
             yearTextField.isEnabled = true
+            addNewVM.getYearsByModel(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected])
+            yearTextField.placeholder = "Loading years..."
+            
         } else {
-            yearTextField.text = years[picker.selectedRow(inComponent: 0)]
+            
+            yearIndexSelected = selectedIndex
+            
+            yearTextField.text = years[yearIndexSelected]
+            
+            addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "")
+            
         }
         cancel()
     }
@@ -163,6 +203,40 @@ extension AddNewViewController {
                     self.brands = self.addNewVM.brandsNames
                     self.brandTextField.placeholder = "Select a brand"
                     self.brandTextField.isEnabled = true
+                }
+                
+            }
+        }.store(in: &cancellables)
+     
+        addNewVM.$models.sink{ vmModels in
+            if vmModels.count > 0{
+                
+                DispatchQueue.main.async {
+                    self.models = self.addNewVM.modelsNames
+                    self.modelTextField.placeholder = "Select a model"
+                    self.modelTextField.isEnabled = true
+                }
+                
+            }
+        }.store(in: &cancellables)
+            
+        addNewVM.$yearModel.sink{ vmYearModel in
+            if vmYearModel.count > 0{
+                
+                DispatchQueue.main.async {
+                    self.years = self.addNewVM.yearLabels
+                    self.yearTextField.placeholder = "Select a year"
+                    self.yearTextField.isEnabled = true
+                }
+                
+            }
+        }.store(in: &cancellables)
+        
+        addNewVM.$valuation.sink{ vmValuation in
+            if vmValuation != nil{
+                
+                DispatchQueue.main.async {
+                    print(self.addNewVM.valuation!)
                 }
                 
             }
@@ -188,15 +262,19 @@ extension AddNewViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        var title = ""
+        
         if brandTextField.isFirstResponder {
-            return brands[row]
+            title = brands[row]
         } else if modelTextField.isFirstResponder {
-            return models[row]
+            title = models[row]
+        }else if yearTextField.isFirstResponder {
+            title = years[row]
         }
-        return years[row]
+        
+        return title
     }
-    
-    
     
 }
 
@@ -218,8 +296,8 @@ extension AddNewViewController {
     
     func setup(){
         
-        self.view.addSubview(roundedImage)
         self.view.addSubview(containerView)
+        containerView.addSubview(roundedImage)
         containerView.addSubview(nicknameTextField)
         containerView.addSubview(brandTextField)
         containerView.addSubview(modelTextField)
@@ -232,16 +310,16 @@ extension AddNewViewController {
         
         NSLayoutConstraint.activate([
             
-            roundedImage.bottomAnchor.constraint(equalTo: self.containerView.topAnchor, constant: -20),
-            roundedImage.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            roundedImage.heightAnchor.constraint(equalToConstant: 200),
-            roundedImage.widthAnchor.constraint(equalToConstant: 200),
-            
             containerView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
             containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            nicknameTextField.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 20),
+            roundedImage.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 20),
+            roundedImage.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            roundedImage.heightAnchor.constraint(equalToConstant: 200),
+            roundedImage.widthAnchor.constraint(equalToConstant: 200),
+            
+            nicknameTextField.topAnchor.constraint(equalTo: self.roundedImage.bottomAnchor, constant: 20),
             nicknameTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
             nicknameTextField.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
             nicknameTextField.heightAnchor.constraint(equalToConstant: 30),

@@ -8,6 +8,8 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    private var cars: [Car?] = []
 
     private lazy var containerView: UIView = {
         let element = UIView()
@@ -61,9 +63,29 @@ class HomeViewController: UIViewController {
         return element
     }()
     
+    private lazy var carCollectionView: UICollectionView = {
+        let element = UICollectionView()
+        
+        element.dataSource = self
+        element.delegate = self
+        return element
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchCars()
         setup()
+    }
+    
+    func fetchCars(){
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        do {
+            cars = try context.fetch(Car.fetchRequest())
+        }catch{
+            
+        }
+        
     }
 
     @objc func navigateToPage() {
@@ -71,6 +93,20 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(addNewVC, animated: true)
     }
 
+}
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        cars.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = UICollectionViewCell()
+        cell.largeContentTitle = "teste"
+        return cell
+    }
+    
 }
 
 extension HomeViewController {
@@ -86,7 +122,7 @@ extension HomeViewController {
         self.view.backgroundColor = UIColor(named: "Background")
     
         self.title = "Valuate My Car"
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: "ElementColor")!, .font: UIFont(name: "Futura-Bold", size: 28)!]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: "ElementColor")!, .font: UIFont(name: "Futura-Bold", size: 22)!]
         
         NSLayoutConstraint.activate([
             

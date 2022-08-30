@@ -7,3 +7,12 @@
 
 import Foundation
 
+struct YearModel: Codable {
+    let id: String
+    let year: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "Value"
+        case year = "Label"
+    }
+}
