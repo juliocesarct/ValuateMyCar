@@ -21,7 +21,6 @@ class AddNewViewModel: AddNewViewModelProtocol {
     @Published var models: [Model] = []
     @Published var brands: [Brand] = []
     @Published var yearModel: [YearModel] = []
-    @Published var valuation: Valuation? = nil
     private(set) var car: Car! = nil
     var references: [Reference] = [] {
         didSet {
@@ -64,18 +63,6 @@ class AddNewViewModel: AddNewViewModelProtocol {
         }catch{
             print("erro inesperado ao salvar")
         }
-        
-    }
-    
-    func getValuation() {
-        
-        guard let brandId = car.brandId else {return}
-        guard let modelId = car.modelId else {return}
-        guard let yearModelId = car.yearModelId else {return}
-        
-        repository.getValuation(brandId: brandId, referenceId: String(references[0].id), modelId: modelId, yearModelId: yearModelId ,completion: { valuation, error in
-            self.valuation = valuation ?? nil
-        })
         
     }
     

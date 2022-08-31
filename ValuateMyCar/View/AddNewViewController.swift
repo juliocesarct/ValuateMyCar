@@ -159,7 +159,7 @@ extension AddNewViewController {
             
             brandIndexSelected = selectedIndex
             
-            if nicknameTextField.text!.isEmpty{
+            if (nicknameTextField.text ?? "").isEmpty{
                 nicknameTextField.text = "My \(brands[brandIndexSelected])"
             }
             
@@ -227,16 +227,6 @@ extension AddNewViewController {
                     self.years = self.addNewVM.yearLabels
                     self.yearTextField.placeholder = "Select a year"
                     self.yearTextField.isEnabled = true
-                }
-                
-            }
-        }.store(in: &cancellables)
-        
-        addNewVM.$valuation.sink{ vmValuation in
-            if vmValuation != nil{
-                
-                DispatchQueue.main.async {
-                    print(self.addNewVM.valuation!)
                 }
                 
             }
