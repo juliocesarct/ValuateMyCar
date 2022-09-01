@@ -22,6 +22,17 @@ class DetailViewController: UIViewController {
         return element
     }()
     
+    private lazy var modelLabel: UILabel = {
+        let element = UILabel(frame: .zero)
+        element.layer.masksToBounds = true
+        element.translatesAutoresizingMaskIntoConstraints = false
+        element.text = "Loading..."
+        element.textColor = UIColor(named: "Black")
+        element.font = UIFont(name: "Futura-Bold", size: 18)
+        element.textAlignment = .center
+        return element
+    }()
+    
     private lazy var roundedImageView: UIImageView = {
         let element = UIImageView()
         let image = UIImage(systemName: "car.fill")?.withRenderingMode(.alwaysTemplate)
@@ -41,7 +52,7 @@ class DetailViewController: UIViewController {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.text = "Current value:"
         element.textColor = UIColor(named: "Black")
-        element.font = UIFont(name: "Futura", size: 14)
+        element.font = UIFont(name: "Futura", size: 18)
         element.textAlignment = .center
         return element
     }()
@@ -94,6 +105,7 @@ class DetailViewController: UIViewController {
         detailVM.$valuation.sink { valuation in
             DispatchQueue.main.async {
                 self.valueLabel.text = valuation?.valuation ?? "R$ 0,00"
+                self.modelLabel.text = valuation?.model ?? "Failed to load"
             }
         }.store(in: &cancellables)
         
@@ -123,6 +135,7 @@ extension DetailViewController {
     func setup(){
         
         self.view.addSubview(containerView)
+        containerView.addSubview(modelLabel)
         containerView.addSubview(roundedImageView)
         containerView.addSubview(valueTitleLabel)
         containerView.addSubview(valueLabel)
@@ -132,6 +145,7 @@ extension DetailViewController {
         self.view.backgroundColor = UIColor(named: "Background")
     
         self.title = car.nickname
+        self.navigationController?.navigationBar.tintColor = UIColor(named: "ElementColor")
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: "ElementColor")!, .font: UIFont(name: "Futura-Bold", size: 22)!]
         
         NSLayoutConstraint.activate([
@@ -140,7 +154,12 @@ extension DetailViewController {
             containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            roundedImageView.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 40),
+            modelLabel.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 40),
+            modelLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            modelLabel.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 10),
+            modelLabel.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -10),
+            
+            roundedImageView.topAnchor.constraint(equalTo: self.modelLabel.bottomAnchor, constant: 20),
             roundedImageView.widthAnchor.constraint(equalToConstant: 200),
             roundedImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             roundedImageView.heightAnchor.constraint(equalToConstant: 200),

@@ -144,8 +144,8 @@
 		83084284289AF1BE00EF8E8E /* ValuateMyCar */ = {
 			isa = PBXGroup;
 			children = (
+				8398CBEB28C113BB006CE582 /* Service */,
 				834AAA4728B025E0003565CA /* Repository */,
-				834AAA4628B0236C003565CA /* Constants */,
 				834AAA4128AFCD8C003565CA /* ViewModel */,
 				834AAA4028AFCD86003565CA /* View */,
 				834AAA3F28AFCD7F003565CA /* Model */,
@@ -211,19 +211,19 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		834AAA4628B0236C003565CA /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		834AAA4728B025E0003565CA /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				834AAA4828B02600003565CA /* Repository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		8398CBEB28C113BB006CE582 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		A6C51843C92AD4AC5714DFF1 /* Pods */ = {

@@ -117,10 +117,11 @@ class AddNewViewController: UIViewController {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.setTitle("Save", for: .normal)
         element.setTitle("Fill all fields to save", for: .disabled)
-        element.layer.cornerRadius = 10
+        element.setTitleColor(UIColor(named: "ElementColor"), for: .disabled)
         element.setTitleColor(UIColor(named: "Background"), for: .normal)
+        element.layer.cornerRadius = 10
         element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
-        element.backgroundColor = UIColor(named: "ElementColor")
+        element.backgroundColor = UIColor(named: "Background")
         element.isEnabled = false
         element.addTarget(self, action: #selector(navigateToPage), for: .touchUpInside)
         return element
@@ -277,6 +278,7 @@ extension AddNewViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if !(nicknameTextField.text?.isEmpty ?? true) && !(yearTextField.text?.isEmpty ?? true){
             saveButton.isEnabled = true
+            saveButton.backgroundColor = UIColor(named: "ElementColor")
         }
     }
     
@@ -285,6 +287,9 @@ extension AddNewViewController: UITextFieldDelegate {
 extension AddNewViewController {
     
     func setup(){
+        
+        self.title = "Add New"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(named: "ElementColor")!, .font: UIFont(name: "Futura-Bold", size: 22)!]
         
         self.view.addSubview(containerView)
         containerView.addSubview(roundedImage)

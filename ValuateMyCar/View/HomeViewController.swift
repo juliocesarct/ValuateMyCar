@@ -64,17 +64,17 @@ class HomeViewController: UIViewController {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.setTitle("Add New", for: .normal)
         element.layer.cornerRadius = 10
-        element.setTitleColor(UIColor(named: "ElementColor"), for: .normal)
+        element.setTitleColor(UIColor(named: "Background"), for: .normal)
         element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
-        element.backgroundColor = UIColor(named: "Background")
+        element.backgroundColor = UIColor(named: "ElementColor")
         element.addTarget(self, action: #selector(navigateToPage), for: .touchUpInside)
         return element
     }()
     
     private lazy var carCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = .init(width: 148, height: 234)
+        layout.scrollDirection = .vertical
+        layout.itemSize = .init(width: 360, height: 200)
         let element = UICollectionView(frame: .zero, collectionViewLayout: layout)
         element.register(HomeViewCarCell.self, forCellWithReuseIdentifier: HomeViewCarCell.reuseIdentifier)
         element.translatesAutoresizingMaskIntoConstraints = false
@@ -89,9 +89,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fetchCars()
         setup()
-//        cars.count > 0 ? setupCollection() : setupWelcome()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -193,6 +191,8 @@ extension HomeViewController {
             addButton.trailingAnchor.constraint(equalTo: self.containerView1.trailingAnchor, constant: -20),
             
         ])
+        
+        containerView2.removeFromSuperview()
     }
     
     func setupCollection(){
@@ -204,7 +204,7 @@ extension HomeViewController {
         
         welcomeTitle.text = "Cars in my garage"
         welcomeTitle.textColor = UIColor(named: "ElementColor")
-        welcomeTitle.font = UIFont(name: "Futura-Bold", size: 22)
+        welcomeTitle.font = UIFont(name: "Futura", size: 18)
         
         logo.isHidden = true
         welcomeDescription.isHidden = true
@@ -212,7 +212,8 @@ extension HomeViewController {
         
         NSLayoutConstraint.activate([
             
-            containerView2.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+            containerView2.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            containerView2.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             containerView2.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             containerView2.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
@@ -223,7 +224,6 @@ extension HomeViewController {
             carCollectionView.topAnchor.constraint(equalTo: self.welcomeTitle.bottomAnchor, constant: 20),
             carCollectionView.leadingAnchor.constraint(equalTo: self.containerView2.leadingAnchor, constant: 10),
             carCollectionView.trailingAnchor.constraint(equalTo: self.containerView2.trailingAnchor, constant: -10),
-            carCollectionView.heightAnchor.constraint(equalToConstant: 250),
             carCollectionView.bottomAnchor.constraint(equalTo: self.addButton.topAnchor, constant: -40),
             
             addButton.bottomAnchor.constraint(equalTo: self.containerView2.bottomAnchor, constant: -20),
@@ -231,6 +231,7 @@ extension HomeViewController {
             addButton.trailingAnchor.constraint(equalTo: self.containerView2.trailingAnchor, constant: -20),
         
         ])
+        containerView1.removeFromSuperview()
     }
     
 }

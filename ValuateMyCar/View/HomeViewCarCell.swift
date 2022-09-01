@@ -16,6 +16,7 @@ class HomeViewCarCell: UICollectionViewCell {
         element.layer.cornerRadius = 8
         element.image = UIImage(systemName: "car")
         element.tintColor = .gray
+        element.contentMode = .scaleAspectFit
         element.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         return element
     }()
@@ -55,6 +56,7 @@ class HomeViewCarCell: UICollectionViewCell {
         innerView.addSubview(carNickname)
         
         NSLayoutConstraint.activate([
+            
             innerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             innerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             innerView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -65,7 +67,8 @@ class HomeViewCarCell: UICollectionViewCell {
             carImage.heightAnchor.constraint(equalToConstant: 120),
             carImage.widthAnchor.constraint(equalTo: innerView.widthAnchor),
             
-            carNickname.bottomAnchor.constraint(equalTo: innerView.bottomAnchor, constant: -20),
+            carNickname.topAnchor.constraint(equalTo: carImage.bottomAnchor, constant: 10),
+            carNickname.bottomAnchor.constraint(equalTo: innerView.bottomAnchor, constant: -10),
             carNickname.centerXAnchor.constraint(equalTo: innerView.centerXAnchor)
 
         ])
