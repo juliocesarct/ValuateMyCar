@@ -7,7 +7,15 @@
 
 import Foundation
 
-class Repository {
+protocol RepositoryProtocol {
+    func getReferences(completion: @escaping ([Reference]?, Error? ) -> Void )
+    func getBrands(referenceId: String ,completion: @escaping ([Brand]?, Error? ) -> Void )
+    func getModels(brandId: String, referenceId: String ,completion: @escaping ([Model]?, Error? ) -> Void )
+    func getYearModel(brandId: String, referenceId: String, modelId: String ,completion: @escaping ([YearModel]?, Error? ) -> Void )
+    func getValuation(brandId: String, referenceId: String, modelId: String ,yearModelId: String ,completion: @escaping (Valuation?, Error? ) -> Void)
+}
+
+class Repository: RepositoryProtocol {
     
     let baseURL = "https://veiculos.fipe.org.br/api/veiculos"
     
@@ -17,23 +25,24 @@ class Repository {
         
         post(endpoint: endpoint){ data, error in
             var references: [Reference] = []
-            //var refError = nil
+            var repositoryError: NetworkError? = nil
             
             if error != nil {
-                
+                repositoryError = .invalidResponse
             }
             
             guard let data = data else {
+                repositoryError = .noData
                 return
             }
                 
             do{
                 references = try Array(JSONDecoder().decode([Reference].self, from: data)[0..<12])
             }catch{
-                
+                repositoryError = .serializationError
             }
             
-            completion(references, nil )
+            completion(references, repositoryError )
             return
         }
     }
@@ -45,23 +54,24 @@ class Repository {
         
         post(endpoint: endpoint, body: body){ data, error in
             var brands: [Brand] = []
-            //var refError = nil
+            var repositoryError: NetworkError? = nil
             
             if error != nil {
-                
+                repositoryError = .invalidResponse
             }
             
             guard let data = data else {
+                repositoryError = .noData
                 return
             }
                 
             do{
                 brands = try JSONDecoder().decode([Brand].self, from: data)
             }catch{
-                
+                repositoryError = .serializationError
             }
             
-            completion(brands, nil )
+            completion(brands, repositoryError )
             return
         }
     }
@@ -73,23 +83,24 @@ class Repository {
         
         post(endpoint: endpoint, body: body){ data, error in
             var models: [Model] = []
-            //var refError = nil
+            var repositoryError: NetworkError? = nil
             
             if error != nil {
-                
+                repositoryError = .invalidResponse
             }
             
             guard let data = data else {
+                repositoryError = .noData
                 return
             }
                 
             do{
                 models = try JSONDecoder().decode(Models.self, from: data).models
             }catch{
-                
+                repositoryError = .serializationError
             }
             
-            completion(models, nil )
+            completion(models, repositoryError )
             return
         }
     }
@@ -101,22 +112,24 @@ class Repository {
         
         post(endpoint: endpoint, body: body){ data, error in
             var references: [YearModel] = []
+            var repositoryError: NetworkError? = nil
             
             if error != nil {
-                
+                repositoryError = .invalidResponse
             }
             
             guard let data = data else {
+                repositoryError = .noData
                 return
             }
                 
             do{
                 references = try JSONDecoder().decode([YearModel].self, from: data)
             }catch{
-                
+                repositoryError = .serializationError
             }
             
-            completion(references, nil )
+            completion(references, repositoryError )
             return
         }
     }
@@ -135,22 +148,24 @@ class Repository {
         
         post(endpoint: endpoint, body: body){ data, error in
             var valuation: Valuation? = nil
+            var repositoryError: NetworkError? = nil
             
             if error != nil {
-                
+                repositoryError = .invalidResponse
             }
             
             guard let data = data else {
+                repositoryError = .noData
                 return
             }
                 
             do{
                 valuation = try JSONDecoder().decode(Valuation.self, from: data)
             }catch{
-                
+                repositoryError = .serializationError
             }
             
-            completion(valuation, nil )
+            completion(valuation, repositoryError )
             return
         }
     }
@@ -171,11 +186,6 @@ class Repository {
                 
                 if error != nil {
                     completion(nil, error)
-                    return
-                }
-                
-                guard let data = data else {
-                    completion(nil,error)
                     return
                 }
                 

@@ -18,10 +18,13 @@ protocol AddNewViewModelProtocol {
 class AddNewViewModel: AddNewViewModelProtocol {
     
     private let repository = Repository()
+    private let localRepository = LocalRepository()
+    
     @Published var models: [Model] = []
     @Published var brands: [Brand] = []
     @Published var yearModel: [YearModel] = []
     private(set) var car: Car! = nil
+    private(set) var errorString = ""
     var references: [Reference] = [] {
         didSet {
             if references.count > 0{
@@ -48,27 +51,11 @@ class AddNewViewModel: AddNewViewModelProtocol {
         }
     }
     
-    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String){
-        
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        car = Car(context: context)
-        car.brandId = String(brand.id)
-        car.modelId = String(model.id)
-        car.yearModelId = String(year.id)
-        car.nickname = nickname
-        
-        do{
-            try context.save()
-        }catch{
-            print("erro inesperado ao salvar")
-        }
-        
-    }
-    
     func getYearsByModel(brand: Brand, model: Model) {
         repository.getYearModel(brandId: brand.id, referenceId: String(references[0].id), modelId: String(model.id), completion: { yearModels, error in
+            
             self.yearModel = yearModels ?? []
+            
         })
     }
     
@@ -91,6 +78,15 @@ class AddNewViewModel: AddNewViewModelProtocol {
     func getReferences(){
         repository.getReferences { references, error in
             self.references = references ?? []
+        }
+    }
+    
+    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String){
+        
+        localRepository.saveCar(brand: brand, model: model, year: year, nickname: nickname) { error in
+            if error != nil {
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+            }
         }
     }
     

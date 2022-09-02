@@ -160,9 +160,7 @@ extension AddNewViewController {
             
             brandIndexSelected = selectedIndex
             
-            if (nicknameTextField.text ?? "").isEmpty{
-                nicknameTextField.text = "My \(brands[brandIndexSelected])"
-            }
+            nicknameTextField.text = "My \(brands[brandIndexSelected])"
             
             brandTextField.text = brands[brandIndexSelected]
             yearTextField.text = ""

@@ -26,8 +26,12 @@
 		834AAA4528B02041003565CA /* AddNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4428B02041003565CA /* AddNewViewModel.swift */; };
 		834AAA4928B02600003565CA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4828B02600003565CA /* Repository.swift */; };
 		8363AA6C28B3B17D004B47C3 /* Reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363AA6B28B3B17D004B47C3 /* Reference.swift */; };
+		8398CBEE28C116C9006CE582 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398CBED28C116C9006CE582 /* NetworkError.swift */; };
 		839AE35328B7BABC006BE022 /* Valuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839AE35228B7BABC006BE022 /* Valuation.swift */; };
 		83A4EB4E28BF948600B61185 /* HomeViewCarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4EB4D28BF948600B61185 /* HomeViewCarCell.swift */; };
+		83B3ADCF28C23067000C35F7 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3ADCE28C23067000C35F7 /* CoreDataService.swift */; };
+		83B3ADD128C249D3000C35F7 /* LocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3ADD028C249D3000C35F7 /* LocalRepository.swift */; };
+		83B3ADD328C27374000C35F7 /* LocalDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3ADD228C27374000C35F7 /* LocalDataError.swift */; };
 		83DCE24128B51D9100CD0453 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCE24028B51D9100CD0453 /* Brand.swift */; };
 		83DCE24328B51DB800CD0453 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCE24228B51DB800CD0453 /* Model.swift */; };
 		83DCE24528B53CE100CD0453 /* YearModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCE24428B53CE100CD0453 /* YearModel.swift */; };
@@ -79,8 +83,12 @@
 		834AAA4428B02041003565CA /* AddNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewViewModel.swift; sourceTree = "<group>"; };
 		834AAA4828B02600003565CA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		8363AA6B28B3B17D004B47C3 /* Reference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reference.swift; sourceTree = "<group>"; };
+		8398CBED28C116C9006CE582 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		839AE35228B7BABC006BE022 /* Valuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valuation.swift; sourceTree = "<group>"; };
 		83A4EB4D28BF948600B61185 /* HomeViewCarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCarCell.swift; sourceTree = "<group>"; };
+		83B3ADCE28C23067000C35F7 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		83B3ADD028C249D3000C35F7 /* LocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRepository.swift; sourceTree = "<group>"; };
+		83B3ADD228C27374000C35F7 /* LocalDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataError.swift; sourceTree = "<group>"; };
 		83DCE24028B51D9100CD0453 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		83DCE24228B51DB800CD0453 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		83DCE24428B53CE100CD0453 /* YearModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearModel.swift; sourceTree = "<group>"; };
@@ -144,6 +152,7 @@
 		83084284289AF1BE00EF8E8E /* ValuateMyCar */ = {
 			isa = PBXGroup;
 			children = (
+				8398CBEC28C116B6006CE582 /* Enum */,
 				8398CBEB28C113BB006CE582 /* Service */,
 				834AAA4728B025E0003565CA /* Repository */,
 				834AAA4128AFCD8C003565CA /* ViewModel */,
@@ -215,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				834AAA4828B02600003565CA /* Repository.swift */,
+				83B3ADD028C249D3000C35F7 /* LocalRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -222,8 +232,18 @@
 		8398CBEB28C113BB006CE582 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				83B3ADCE28C23067000C35F7 /* CoreDataService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		8398CBEC28C116B6006CE582 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				8398CBED28C116C9006CE582 /* NetworkError.swift */,
+				83B3ADD228C27374000C35F7 /* LocalDataError.swift */,
+			);
+			path = Enum;
 			sourceTree = "<group>";
 		};
 		A6C51843C92AD4AC5714DFF1 /* Pods */ = {
@@ -457,14 +477,18 @@
 				8339605728BE472900C9665B /* Car+CoreDataProperties.swift in Sources */,
 				8363AA6C28B3B17D004B47C3 /* Reference.swift in Sources */,
 				8339605628BE472900C9665B /* Car+CoreDataClass.swift in Sources */,
+				83B3ADD328C27374000C35F7 /* LocalDataError.swift in Sources */,
 				834AAA4328AFCDDF003565CA /* AddNewViewController.swift in Sources */,
+				8398CBEE28C116C9006CE582 /* NetworkError.swift in Sources */,
 				834AAA4528B02041003565CA /* AddNewViewModel.swift in Sources */,
 				8339605B28BE6CC300C9665B /* DetailViewController.swift in Sources */,
 				83DCE24528B53CE100CD0453 /* YearModel.swift in Sources */,
 				83A4EB4E28BF948600B61185 /* HomeViewCarCell.swift in Sources */,
+				83B3ADCF28C23067000C35F7 /* CoreDataService.swift in Sources */,
 				83DCE24328B51DB800CD0453 /* Model.swift in Sources */,
 				8308428A289AF1BE00EF8E8E /* HomeViewController.swift in Sources */,
 				83084286289AF1BE00EF8E8E /* AppDelegate.swift in Sources */,
+				83B3ADD128C249D3000C35F7 /* LocalRepository.swift in Sources */,
 				839AE35328B7BABC006BE022 /* Valuation.swift in Sources */,
 				83084288289AF1BE00EF8E8E /* SceneDelegate.swift in Sources */,
 				8339605928BE61B300C9665B /* HomeViewModel.swift in Sources */,

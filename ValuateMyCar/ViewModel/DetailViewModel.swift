@@ -13,9 +13,14 @@ class DetailViewModel {
     
     @Published private(set) var valuation: Valuation? = nil
     @Published private(set) var references: [Reference] = []
-    private let repository = Repository()
+    @Published private(set) var errorString = ""
     
-    init(){
+    private let repository: RepositoryProtocol
+    private let localRepository: LocalRepositoryProtocol
+    
+    init(repository: RepositoryProtocol = Repository(), localRepository: LocalRepositoryProtocol = LocalRepository() ){
+        self.repository = repository
+        self.localRepository = localRepository
         self.getReferences()
     }
     
@@ -33,13 +38,10 @@ class DetailViewModel {
     
     func deleteCar(car: Car){
         
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        context.delete(car)
-        do {
-            try context.save()
-        }catch{
-            
+        localRepository.deleteCar(car: car) { error in
+            if error != nil {
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+            }
         }
         
     }

@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Combine
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     private var cars: [Car?] = []
+    private let homeVM = HomeViewModel()
+    private var cancellables = Set<AnyCancellable>()
 
     private lazy var containerView1: UIView = {
         let element = UIView()
@@ -90,29 +93,31 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        fetchCars()
+        homeVM.fetchCars()
         carCollectionView.reloadData()
         cars.count > 0 ? setupCollection() : setupWelcome()
-    }
-    
-    func fetchCars(){
-        
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        do {
-            cars = try context.fetch(Car.fetchRequest())
-        }catch{
-            
-        }
-        
     }
 
     @objc func navigateToPage() {
         let addNewVC = AddNewViewController()
         navigationController?.pushViewController(addNewVC, animated: true)
+    }
+    
+    func setupBinding(){
+        
+        homeVM.$cars.sink { cars in
+            self.cars = cars
+        }.store(in: &cancellables)
+        
+        homeVM.$errorString.sink { errorString in
+            print(errorString)
+        }.store(in: &cancellables)
+        
     }
 
 }

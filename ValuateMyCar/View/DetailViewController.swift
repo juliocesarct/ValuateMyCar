@@ -104,7 +104,7 @@ class DetailViewController: UIViewController {
     func setupBinding(){
         detailVM.$valuation.sink { valuation in
             DispatchQueue.main.async {
-                self.valueLabel.text = valuation?.valuation ?? "R$ 0,00"
+                self.valueLabel.text = valuation?.valuation ?? "R$ ..."
                 self.modelLabel.text = valuation?.model ?? "Failed to load"
             }
         }.store(in: &cancellables)
