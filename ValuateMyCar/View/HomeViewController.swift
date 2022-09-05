@@ -83,8 +83,8 @@ final class HomeViewController: UIViewController {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.backgroundColor = .clear
         element.layer.cornerRadius = 8
-        element.alwaysBounceVertical = false
-        element.showsHorizontalScrollIndicator = true
+        //element.alwaysBounceVertical = false
+        element.showsVerticalScrollIndicator = true
         element.dataSource = self
         element.delegate = self
         return element
@@ -115,7 +115,15 @@ final class HomeViewController: UIViewController {
         }.store(in: &cancellables)
         
         homeVM.$errorString.sink { errorString in
-            print(errorString)
+            if !errorString.isEmpty {
+                DispatchQueue.main.async {
+                    let errorVC = ErrorViewController()
+                    errorVC.titleLabel.text = "Error"
+                    errorVC.descriptionLabel.text = errorString
+                    self.present(errorVC, animated: false)
+                    
+                }
+            }
         }.store(in: &cancellables)
         
     }

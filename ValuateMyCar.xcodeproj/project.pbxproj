@@ -26,6 +26,8 @@
 		834AAA4528B02041003565CA /* AddNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4428B02041003565CA /* AddNewViewModel.swift */; };
 		834AAA4928B02600003565CA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4828B02600003565CA /* Repository.swift */; };
 		8363AA6C28B3B17D004B47C3 /* Reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363AA6B28B3B17D004B47C3 /* Reference.swift */; };
+		8392454C28C632850050866F /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8392454B28C632850050866F /* ErrorViewController.swift */; };
+		8392454E28C66C680050866F /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8392454D28C66C680050866F /* ModalView.swift */; };
 		8398CBEE28C116C9006CE582 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8398CBED28C116C9006CE582 /* NetworkError.swift */; };
 		839AE35328B7BABC006BE022 /* Valuation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839AE35228B7BABC006BE022 /* Valuation.swift */; };
 		83A4EB4E28BF948600B61185 /* HomeViewCarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4EB4D28BF948600B61185 /* HomeViewCarCell.swift */; };
@@ -83,6 +85,8 @@
 		834AAA4428B02041003565CA /* AddNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewViewModel.swift; sourceTree = "<group>"; };
 		834AAA4828B02600003565CA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		8363AA6B28B3B17D004B47C3 /* Reference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reference.swift; sourceTree = "<group>"; };
+		8392454B28C632850050866F /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
+		8392454D28C66C680050866F /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 		8398CBED28C116C9006CE582 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		839AE35228B7BABC006BE022 /* Valuation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valuation.swift; sourceTree = "<group>"; };
 		83A4EB4D28BF948600B61185 /* HomeViewCarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCarCell.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 				834AAA4228AFCDDF003565CA /* AddNewViewController.swift */,
 				8339605A28BE6CC300C9665B /* DetailViewController.swift */,
 				83A4EB4D28BF948600B61185 /* HomeViewCarCell.swift */,
+				8392454B28C632850050866F /* ErrorViewController.swift */,
+				8392454D28C66C680050866F /* ModalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 				8339605628BE472900C9665B /* Car+CoreDataClass.swift in Sources */,
 				83B3ADD328C27374000C35F7 /* LocalDataError.swift in Sources */,
 				834AAA4328AFCDDF003565CA /* AddNewViewController.swift in Sources */,
+				8392454C28C632850050866F /* ErrorViewController.swift in Sources */,
 				8398CBEE28C116C9006CE582 /* NetworkError.swift in Sources */,
 				834AAA4528B02041003565CA /* AddNewViewModel.swift in Sources */,
 				8339605B28BE6CC300C9665B /* DetailViewController.swift in Sources */,
@@ -488,6 +495,7 @@
 				83DCE24328B51DB800CD0453 /* Model.swift in Sources */,
 				8308428A289AF1BE00EF8E8E /* HomeViewController.swift in Sources */,
 				83084286289AF1BE00EF8E8E /* AppDelegate.swift in Sources */,
+				8392454E28C66C680050866F /* ModalView.swift in Sources */,
 				83B3ADD128C249D3000C35F7 /* LocalRepository.swift in Sources */,
 				839AE35328B7BABC006BE022 /* Valuation.swift in Sources */,
 				83084288289AF1BE00EF8E8E /* SceneDelegate.swift in Sources */,

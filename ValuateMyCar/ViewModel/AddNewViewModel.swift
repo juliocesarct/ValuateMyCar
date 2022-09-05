@@ -20,12 +20,12 @@ class AddNewViewModel: AddNewViewModelProtocol {
     private let repository = Repository()
     private let localRepository = LocalRepository()
     
-    @Published var models: [Model] = []
-    @Published var brands: [Brand] = []
-    @Published var yearModel: [YearModel] = []
+    @Published private(set) var models: [Model] = []
+    @Published private(set) var brands: [Brand] = []
+    @Published private(set) var yearModel: [YearModel] = []
+    @Published private(set) var errorString = ""
     private(set) var car: Car! = nil
-    private(set) var errorString = ""
-    var references: [Reference] = [] {
+    private(set) var references: [Reference] = [] {
         didSet {
             if references.count > 0{
                 getBrands()
@@ -54,6 +54,11 @@ class AddNewViewModel: AddNewViewModelProtocol {
     func getYearsByModel(brand: Brand, model: Model) {
         repository.getYearModel(brandId: brand.id, referenceId: String(references[0].id), modelId: String(model.id), completion: { yearModels, error in
             
+            if error != nil{
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+                return
+            }
+            
             self.yearModel = yearModels ?? []
             
         })
@@ -61,6 +66,12 @@ class AddNewViewModel: AddNewViewModelProtocol {
     
     func getModelsByBrand(brand: Brand) {
         repository.getModels(brandId: brand.id, referenceId: String(references[0].id) ,completion: { models, error in
+            
+            if error != nil{
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+                return
+            }
+            
             self.models = models ?? []
         })
     }
@@ -68,15 +79,24 @@ class AddNewViewModel: AddNewViewModelProtocol {
     
     func getBrands(){
         repository.getBrands(referenceId: String(references[0].id) ) { brands, error in
-            guard let brands = brands else {
+            
+            if error != nil{
+                self.errorString = error?.localizedDescription ?? "Unknown error"
                 return
             }
-            self.brands = brands
+            
+            self.brands = brands ?? []
         }
     }
     
     func getReferences(){
         repository.getReferences { references, error in
+            
+            if error != nil{
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+                return
+            }
+            
             self.references = references ?? []
         }
     }

@@ -123,7 +123,7 @@ class AddNewViewController: UIViewController {
         element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
         element.backgroundColor = UIColor(named: "Background")
         element.isEnabled = false
-        element.addTarget(self, action: #selector(navigateToPage), for: .touchUpInside)
+        element.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
         return element
     }()
     
@@ -133,7 +133,9 @@ class AddNewViewController: UIViewController {
         setupBinding()
     }
     
-    @objc func navigateToPage() {
+    @objc func saveAction() {
+        
+        addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "")
 
         let detailVC = DetailViewController()
         detailVC.car = addNewVM.car
@@ -160,8 +162,6 @@ extension AddNewViewController {
             
             brandIndexSelected = selectedIndex
             
-            nicknameTextField.text = "My \(brands[brandIndexSelected])"
-            
             brandTextField.text = brands[brandIndexSelected]
             yearTextField.text = ""
             modelTextField.text = ""
@@ -187,7 +187,10 @@ extension AddNewViewController {
             
             yearTextField.text = years[yearIndexSelected]
             
-            addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "")
+            let brand = brands[brandIndexSelected]
+            let model = models[modelIndexSelected].components(separatedBy: " ").first ?? ""
+            let year = years[yearIndexSelected].components(separatedBy: " ").first ?? ""
+            nicknameTextField.text = "My \(brand) \(model) - \(year)"
             
         }
         cancel()
@@ -228,6 +231,17 @@ extension AddNewViewController {
                     self.yearTextField.isEnabled = true
                 }
                 
+            }
+        }.store(in: &cancellables)
+        
+        addNewVM.$errorString.sink { errorString in
+            if !errorString.isEmpty {
+                DispatchQueue.main.async {
+                    let errorVC = ErrorViewController()
+                    errorVC.titleLabel.text = "Error"
+                    errorVC.descriptionLabel.text = errorString
+                    self.present(errorVC, animated: false)
+                }
             }
         }.store(in: &cancellables)
         
@@ -312,12 +326,7 @@ extension AddNewViewController {
             roundedImage.heightAnchor.constraint(equalToConstant: 200),
             roundedImage.widthAnchor.constraint(equalToConstant: 200),
             
-            nicknameTextField.topAnchor.constraint(equalTo: self.roundedImage.bottomAnchor, constant: 20),
-            nicknameTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
-            nicknameTextField.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
-            nicknameTextField.heightAnchor.constraint(equalToConstant: 30),
-            
-            brandTextField.topAnchor.constraint(equalTo: self.nicknameTextField.bottomAnchor, constant: 20),
+            brandTextField.topAnchor.constraint(equalTo: self.roundedImage.bottomAnchor, constant: 20),
             brandTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
             brandTextField.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
             brandTextField.heightAnchor.constraint(equalToConstant: 30),
@@ -332,7 +341,12 @@ extension AddNewViewController {
             yearTextField.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
             yearTextField.heightAnchor.constraint(equalToConstant: 30),
             
-            saveButton.topAnchor.constraint(equalTo: self.yearTextField.bottomAnchor, constant: 40),
+            nicknameTextField.topAnchor.constraint(equalTo: self.yearTextField.bottomAnchor, constant: 20),
+            nicknameTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
+            nicknameTextField.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
+            nicknameTextField.heightAnchor.constraint(equalToConstant: 30),
+            
+            saveButton.topAnchor.constraint(equalTo: self.nicknameTextField.bottomAnchor, constant: 40),
             saveButton.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor, constant: -20),
             saveButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
             saveButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),

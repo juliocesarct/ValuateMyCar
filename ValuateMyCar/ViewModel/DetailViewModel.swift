@@ -31,7 +31,18 @@ class DetailViewModel {
         guard let yearModelId = car.yearModelId else {return}
         
         repository.getValuation(brandId: brandId, referenceId: String(reference.id), modelId: modelId, yearModelId: yearModelId ,completion: { valuation, error in
-            self.valuation = valuation ?? nil
+            
+            if error != nil{
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+                return
+            }
+            
+            guard let valuation = valuation else {
+                self.errorString = "Failed to unwrap valuation"
+                return
+            }
+
+            self.valuation = valuation
         })
         
     }
@@ -48,6 +59,12 @@ class DetailViewModel {
     
     func getReferences(){
         repository.getReferences { references, error in
+            
+            if error != nil{
+                self.errorString = error?.localizedDescription ?? "Unknown error"
+                return
+            }
+            
             self.references = references ?? []
         }
     }

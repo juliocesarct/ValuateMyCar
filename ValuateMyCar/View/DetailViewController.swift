@@ -14,11 +14,14 @@ class DetailViewController: UIViewController {
     private let detailVM: DetailViewModel = DetailViewModel()
     private var cancellables = Set<AnyCancellable>()
     
+    private lazy var modalView = ModalView()
+    
     private lazy var containerView: UIView = {
         let element = UIView()
         element.translatesAutoresizingMaskIntoConstraints = false
         element.backgroundColor = UIColor(named: "ElementArea")
         element.layer.cornerRadius = 20
+        element.isHidden = true
         return element
     }()
     
@@ -78,7 +81,7 @@ class DetailViewController: UIViewController {
         element.setTitleColor(UIColor(named: "Background"), for: .normal)
         element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
         element.backgroundColor = UIColor(named: "ElementColor")
-        element.addTarget(self, action: #selector(navigateToPage), for: .touchUpInside)
+        element.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
         return element
     }()
     
@@ -97,16 +100,22 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         setupBinding()
+        setup()
+
     }
     
     func setupBinding(){
+        
         detailVM.$valuation.sink { valuation in
-            DispatchQueue.main.async {
-                self.valueLabel.text = valuation?.valuation ?? "R$ ..."
-                self.modelLabel.text = valuation?.model ?? "Failed to load"
+            if let valuation = valuation{
+                DispatchQueue.main.async {
+                    self.valueLabel.text = valuation.valuation
+                    self.modelLabel.text = valuation.model
+                    self.containerView.isHidden = false
+                }
             }
+            
         }.store(in: &cancellables)
         
         detailVM.$references.sink { refs in
@@ -117,15 +126,50 @@ class DetailViewController: UIViewController {
             
         }.store(in: &cancellables)
         
+        detailVM.$errorString.sink {errorString in
+            if !errorString.isEmpty {
+                
+                DispatchQueue.main.async {
+                    let errorVC = ErrorViewController()
+                    errorVC.titleLabel.text = "Error"
+                    errorVC.descriptionLabel.text = errorString
+                    self.present(errorVC, animated: false)
+                    
+                }
+
+            }
+            
+        }.store(in: &cancellables)
+        
     }
     
-    @objc func navigateToPage() {
-        navigationController?.popViewController(animated: true)
+    @objc func backToHome() {
+        navigationController?.popViewController(animated: false)
     }
+    
+}
+
+extension DetailViewController: ModalViewProtocol{
     
     @objc func deleteCar() {
+        
+        modalView.setup()
+        modalView.delegate = self
+        self.view.addSubview(modalView)
+        
+        NSLayoutConstraint.activate([
+            
+            modalView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            modalView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            modalView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            modalView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        
+        ])
+    }
+    
+    func confirmAction() {
         detailVM.deleteCar(car: car)
-        navigationController?.popViewController(animated: true)
+        backToHome()
     }
     
 }

@@ -44,11 +44,14 @@ class HomeViewCarCell: UICollectionViewCell {
         self.backgroundColor = .clear
         self.translatesAutoresizingMaskIntoConstraints = false
         
+        contentView.backgroundColor = .clear
+        contentView.layer.cornerRadius = 8
+       
         let innerView = UIView()
-        innerView.backgroundColor = .white
+        innerView.translatesAutoresizingMaskIntoConstraints = false
+        innerView.backgroundColor = UIColor(named: "Background")
         innerView.layer.cornerRadius = 8
         innerView.layer.masksToBounds = true
-        innerView.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(innerView)
         
