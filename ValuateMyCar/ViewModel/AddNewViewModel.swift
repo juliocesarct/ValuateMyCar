@@ -75,7 +75,6 @@ class AddNewViewModel: AddNewViewModelProtocol {
             self.models = models ?? []
         })
     }
-
     
     func getBrands(){
         repository.getBrands(referenceId: String(references[0].id) ) { brands, error in
@@ -101,13 +100,17 @@ class AddNewViewModel: AddNewViewModelProtocol {
         }
     }
     
-    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String){
+    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String, image: UIImage?){
         
-        localRepository.saveCar(brand: brand, model: model, year: year, nickname: nickname) { error in
+        localRepository.saveCar(brand: brand, model: model, year: year, nickname: nickname, image: image) { error in
             if error != nil {
                 self.errorString = error?.localizedDescription ?? "Unknown error"
             }
         }
+    }
+    
+    func saveImage(){
+        
     }
     
     init(){

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol LocalRepositoryProtocol {
     func fetchCars(completion: @escaping ([Car]?, LocalDataError?) -> Void )
@@ -41,13 +42,16 @@ class LocalRepository: LocalRepositoryProtocol {
 
     }
     
-    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String, completion: @escaping (LocalDataError?) -> Void ){
+    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String, image: UIImage?, completion: @escaping (LocalDataError?) -> Void ){
         
         let carToSave = Car(context: context)
         carToSave.brandId = String(brand.id)
         carToSave.modelId = String(model.id)
         carToSave.yearModelId = String(year.id)
         carToSave.nickname = nickname
+        if let image = image {
+            carToSave.carImage = image
+        }
         
         do{
             try context.save()

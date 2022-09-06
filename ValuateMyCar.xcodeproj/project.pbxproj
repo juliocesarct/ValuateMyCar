@@ -34,6 +34,7 @@
 		83B3ADCF28C23067000C35F7 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3ADCE28C23067000C35F7 /* CoreDataService.swift */; };
 		83B3ADD128C249D3000C35F7 /* LocalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3ADD028C249D3000C35F7 /* LocalRepository.swift */; };
 		83B3ADD328C27374000C35F7 /* LocalDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B3ADD228C27374000C35F7 /* LocalDataError.swift */; };
+		83D2452E28C789CF006A8AB0 /* SourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D2452D28C789CF006A8AB0 /* SourceType.swift */; };
 		83DCE24128B51D9100CD0453 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCE24028B51D9100CD0453 /* Brand.swift */; };
 		83DCE24328B51DB800CD0453 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCE24228B51DB800CD0453 /* Model.swift */; };
 		83DCE24528B53CE100CD0453 /* YearModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCE24428B53CE100CD0453 /* YearModel.swift */; };
@@ -93,6 +94,7 @@
 		83B3ADCE28C23067000C35F7 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		83B3ADD028C249D3000C35F7 /* LocalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalRepository.swift; sourceTree = "<group>"; };
 		83B3ADD228C27374000C35F7 /* LocalDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataError.swift; sourceTree = "<group>"; };
+		83D2452D28C789CF006A8AB0 /* SourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceType.swift; sourceTree = "<group>"; };
 		83DCE24028B51D9100CD0453 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		83DCE24228B51DB800CD0453 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		83DCE24428B53CE100CD0453 /* YearModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearModel.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			children = (
 				8398CBED28C116C9006CE582 /* NetworkError.swift */,
 				83B3ADD228C27374000C35F7 /* LocalDataError.swift */,
+				83D2452D28C789CF006A8AB0 /* SourceType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				8392454E28C66C680050866F /* ModalView.swift in Sources */,
 				83B3ADD128C249D3000C35F7 /* LocalRepository.swift in Sources */,
 				839AE35328B7BABC006BE022 /* Valuation.swift in Sources */,
+				83D2452E28C789CF006A8AB0 /* SourceType.swift in Sources */,
 				83084288289AF1BE00EF8E8E /* SceneDelegate.swift in Sources */,
 				8339605928BE61B300C9665B /* HomeViewModel.swift in Sources */,
 				83084290289AF1BE00EF8E8E /* ValuateMyCar.xcdatamodeld in Sources */,

@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import UIKit
 
 extension Car {
 
@@ -17,7 +17,7 @@ extension Car {
     }
 
     @NSManaged public var brandId: String?
-    @NSManaged public var carImage: NSObject?
+    @NSManaged public var carImage: UIImage?
     @NSManaged public var modelId: String?
     @NSManaged public var nickname: String?
     @NSManaged public var yearModelId: String?

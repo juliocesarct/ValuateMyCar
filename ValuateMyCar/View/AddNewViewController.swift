@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Photos
 
 class AddNewViewController: UIViewController {
     
@@ -39,7 +40,7 @@ class AddNewViewController: UIViewController {
     
     private lazy var roundedImage: UIImageView = {
         let element = UIImageView()
-        let image = UIImage(systemName: "car.fill")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(systemName: "camera")
         element.backgroundColor = UIColor(named: "Background")
         element.translatesAutoresizingMaskIntoConstraints = false
         element.contentMode = .scaleAspectFit
@@ -47,6 +48,18 @@ class AddNewViewController: UIViewController {
         element.image = image
         element.layer.cornerRadius = 100
         element.layer.masksToBounds = true
+        return element
+    }()
+    
+    private lazy var selectImageButton: UIButton = {
+        let element = UIButton()
+        element.layer.masksToBounds = true
+        element.translatesAutoresizingMaskIntoConstraints = false
+        element.setTitle("Select car image", for: .normal)
+        element.setTitleColor(UIColor(named: "ElementColor"), for: .normal)
+        element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
+        element.backgroundColor = .clear
+        element.addTarget(self, action: #selector(selectImage), for: .touchUpInside)
         return element
     }()
     
@@ -133,19 +146,66 @@ class AddNewViewController: UIViewController {
         setupBinding()
     }
     
+}
+
+extension AddNewViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+    
+        roundedImage.contentMode = .scaleAspectFill
+        roundedImage.image = image
+        
+    }
+
+    func didTapAddPhoto(sourceType: SourceType ) {
+        let picker = UIImagePickerController()
+        
+        if UIImagePickerController.isSourceTypeAvailable( sourceType  == .gallery ? .photoLibrary : .camera ){
+            picker.sourceType = sourceType  == .gallery ? .photoLibrary : .camera
+            picker.allowsEditing = true
+            picker.delegate = self
+            present(picker, animated: true)
+        }
+    }
+    
+    func presentActionSheet(sheet: Any) {
+        present(sheet as! UIAlertController, animated: true)
+    }
+}
+
+extension AddNewViewController {
+    
+    @objc func selectImage(){
+        let sheet = UIAlertController(title: "Add photo", message: nil, preferredStyle: .actionSheet)
+        
+        sheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: {[weak self] _ in
+            self?.didTapAddPhoto(sourceType: .camera)
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Gallery", style: .default, handler: {[weak self] _ in
+            self?.didTapAddPhoto(sourceType: .gallery)
+        }))
+        
+        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        presentActionSheet(sheet: sheet)
+        
+    }
+    
     @objc func saveAction() {
         
-        addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "")
+        addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "", image: roundedImage.image)
 
         let detailVC = DetailViewController()
         detailVC.car = addNewVM.car
         navigationController?.popViewController(animated: false)
         navigationController?.pushViewController(detailVC ,animated: true)
     }
-    
-}
-
-extension AddNewViewController {
     
     @objc func cancel(){
         brandTextField.resignFirstResponder()
@@ -305,6 +365,7 @@ extension AddNewViewController {
         
         self.view.addSubview(containerView)
         containerView.addSubview(roundedImage)
+        containerView.addSubview(selectImageButton)
         containerView.addSubview(nicknameTextField)
         containerView.addSubview(brandTextField)
         containerView.addSubview(modelTextField)
@@ -326,7 +387,11 @@ extension AddNewViewController {
             roundedImage.heightAnchor.constraint(equalToConstant: 200),
             roundedImage.widthAnchor.constraint(equalToConstant: 200),
             
-            brandTextField.topAnchor.constraint(equalTo: self.roundedImage.bottomAnchor, constant: 20),
+            selectImageButton.topAnchor.constraint(equalTo: self.roundedImage.bottomAnchor, constant: 10),
+            selectImageButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
+            selectImageButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
+            
+            brandTextField.topAnchor.constraint(equalTo: self.selectImageButton.bottomAnchor, constant: 20),
             brandTextField.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20),
             brandTextField.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20),
             brandTextField.heightAnchor.constraint(equalToConstant: 30),

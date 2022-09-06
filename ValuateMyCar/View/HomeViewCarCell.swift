@@ -16,8 +16,8 @@ class HomeViewCarCell: UICollectionViewCell {
         element.layer.cornerRadius = 8
         element.image = UIImage(systemName: "car")
         element.tintColor = .gray
-        element.contentMode = .scaleAspectFit
-        element.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        element.contentMode = .scaleAspectFill
+        element.layer.cornerRadius = 20
         return element
     }()
     
@@ -35,9 +35,15 @@ class HomeViewCarCell: UICollectionViewCell {
     }
     
     func setCellData(car: Car) {
+        
         if let name = car.nickname {
             carNickname.text = name
         }
+        
+        if let image = car.carImage{
+            carImage.image = image
+        }
+        
     }
     
    private func setup() {
@@ -66,12 +72,11 @@ class HomeViewCarCell: UICollectionViewCell {
             innerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             carImage.topAnchor.constraint(equalTo: innerView.topAnchor, constant: 20),
-            carImage.leadingAnchor.constraint(equalTo: innerView.leadingAnchor),
+            carImage.centerXAnchor.constraint(equalTo: innerView.centerXAnchor),
             carImage.heightAnchor.constraint(equalToConstant: 120),
-            carImage.widthAnchor.constraint(equalTo: innerView.widthAnchor),
+            carImage.widthAnchor.constraint(equalToConstant: 240),
             
-            carNickname.topAnchor.constraint(equalTo: carImage.bottomAnchor, constant: 10),
-            carNickname.bottomAnchor.constraint(equalTo: innerView.bottomAnchor, constant: -10),
+            carNickname.topAnchor.constraint(equalTo: carImage.bottomAnchor, constant: 15),
             carNickname.centerXAnchor.constraint(equalTo: innerView.centerXAnchor)
 
         ])

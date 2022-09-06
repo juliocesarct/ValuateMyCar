@@ -102,7 +102,6 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupBinding()
         setup()
-
     }
     
     func setupBinding(){
@@ -110,6 +109,8 @@ class DetailViewController: UIViewController {
         detailVM.$valuation.sink { valuation in
             if let valuation = valuation{
                 DispatchQueue.main.async {
+                    self.roundedImageView.contentMode = .scaleAspectFill
+                    self.roundedImageView.image = self.car.carImage
                     self.valueLabel.text = valuation.valuation
                     self.modelLabel.text = valuation.model
                     self.containerView.isHidden = false
