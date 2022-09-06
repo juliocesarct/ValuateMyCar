@@ -53,7 +53,7 @@ class ModalView: UIView{
         element.translatesAutoresizingMaskIntoConstraints = false
         element.setTitle("Close", for: .normal)
         element.layer.cornerRadius = 10
-        element.setTitleColor( .black , for: .normal)
+        element.setTitleColor( UIColor(named: "ElementColor") , for: .normal)
         element.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
         element.backgroundColor = UIColor(named: "ElementArea")
         element.addTarget(self, action: #selector(close), for: .touchUpInside)

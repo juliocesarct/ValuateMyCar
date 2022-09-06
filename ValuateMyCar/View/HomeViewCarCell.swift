@@ -42,42 +42,30 @@ class HomeViewCarCell: UICollectionViewCell {
         
         if let image = car.carImage{
             carImage.image = image
+        }else{
+            carImage.image = UIImage(systemName: "car")
         }
         
     }
     
    private func setup() {
         self.backgroundColor = .clear
-        self.translatesAutoresizingMaskIntoConstraints = false
         
-        contentView.backgroundColor = .clear
+        contentView.backgroundColor = UIColor(named: "Background")
         contentView.layer.cornerRadius = 8
-       
-        let innerView = UIView()
-        innerView.translatesAutoresizingMaskIntoConstraints = false
-        innerView.backgroundColor = UIColor(named: "Background")
-        innerView.layer.cornerRadius = 8
-        innerView.layer.masksToBounds = true
-        
-        contentView.addSubview(innerView)
-        
-        innerView.addSubview(carImage)
-        innerView.addSubview(carNickname)
-        
+        contentView.clipsToBounds = true
+        contentView.addSubview(carImage)
+        contentView.addSubview(carNickname)
+
         NSLayoutConstraint.activate([
             
-            innerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            innerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            innerView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            innerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            carImage.topAnchor.constraint(equalTo: innerView.topAnchor, constant: 20),
-            carImage.centerXAnchor.constraint(equalTo: innerView.centerXAnchor),
+            carImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            carImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             carImage.heightAnchor.constraint(equalToConstant: 120),
             carImage.widthAnchor.constraint(equalToConstant: 240),
             
             carNickname.topAnchor.constraint(equalTo: carImage.bottomAnchor, constant: 15),
-            carNickname.centerXAnchor.constraint(equalTo: innerView.centerXAnchor)
+            carNickname.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
 
         ])
     }

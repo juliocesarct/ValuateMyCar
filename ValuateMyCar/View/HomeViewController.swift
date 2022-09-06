@@ -77,13 +77,12 @@ final class HomeViewController: UIViewController {
     private lazy var carCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = .init(width: 360, height: 200)
+        layout.itemSize = .init(width: 300, height: 200)
         let element = UICollectionView(frame: .zero, collectionViewLayout: layout)
         element.register(HomeViewCarCell.self, forCellWithReuseIdentifier: HomeViewCarCell.reuseIdentifier)
         element.translatesAutoresizingMaskIntoConstraints = false
         element.backgroundColor = .clear
         element.layer.cornerRadius = 8
-        //element.alwaysBounceVertical = false
         element.showsVerticalScrollIndicator = true
         element.dataSource = self
         element.delegate = self

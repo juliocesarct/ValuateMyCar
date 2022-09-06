@@ -13,8 +13,11 @@ class DetailViewController: UIViewController {
     var car: Car!
     private let detailVM: DetailViewModel = DetailViewModel()
     private var cancellables = Set<AnyCancellable>()
+    private let activityIndicator = UIActivityIndicatorView()
     
-    private lazy var modalView = ModalView()
+    private lazy var modalView: ModalView = {
+        return ModalView()
+    }()
     
     private lazy var containerView: UIView = {
         let element = UIView()
@@ -38,11 +41,11 @@ class DetailViewController: UIViewController {
     
     private lazy var roundedImageView: UIImageView = {
         let element = UIImageView()
-        let image = UIImage(systemName: "car.fill")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(systemName: "car")?.withRenderingMode(.alwaysTemplate)
         element.backgroundColor = UIColor(named: "Background")
         element.translatesAutoresizingMaskIntoConstraints = false
         element.contentMode = .scaleAspectFit
-        element.tintColor = UIColor(named: "ElementColor")
+        element.tintColor = .gray
         element.image = image
         element.layer.cornerRadius = 100
         element.layer.masksToBounds = true
@@ -109,11 +112,15 @@ class DetailViewController: UIViewController {
         detailVM.$valuation.sink { valuation in
             if let valuation = valuation{
                 DispatchQueue.main.async {
-                    self.roundedImageView.contentMode = .scaleAspectFill
-                    self.roundedImageView.image = self.car.carImage
+                    if let carImage = self.car.carImage{
+                        self.roundedImageView.contentMode = .scaleAspectFill
+                        self.roundedImageView.image = carImage
+                    }
                     self.valueLabel.text = valuation.valuation
                     self.modelLabel.text = valuation.model
                     self.containerView.isHidden = false
+                    self.activityIndicator.stopAnimating()
+                
                 }
             }
             
@@ -180,12 +187,18 @@ extension DetailViewController {
     func setup(){
         
         self.view.addSubview(containerView)
+        self.view.addSubview(activityIndicator)
         containerView.addSubview(modelLabel)
         containerView.addSubview(roundedImageView)
         containerView.addSubview(valueTitleLabel)
         containerView.addSubview(valueLabel)
         containerView.addSubview(closeButton)
         containerView.addSubview(deleteButton)
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.color = UIColor(named: "ElementColor")
+        activityIndicator.style = .large
+        activityIndicator.startAnimating()
         
         self.view.backgroundColor = UIColor(named: "Background")
     
