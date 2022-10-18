@@ -14,9 +14,8 @@ class HomeViewCarCell: UICollectionViewCell {
         element.translatesAutoresizingMaskIntoConstraints = false
         element.clipsToBounds = true
         element.layer.cornerRadius = 8
-        element.image = UIImage(systemName: "car")
         element.tintColor = .gray
-        element.contentMode = .scaleAspectFill
+        element.contentMode = .scaleAspectFit
         element.layer.cornerRadius = 20
         return element
     }()
@@ -42,8 +41,10 @@ class HomeViewCarCell: UICollectionViewCell {
         
         if let image = car.carImage{
             carImage.image = image
+            carImage.contentMode = .scaleAspectFill
         }else{
-            carImage.image = UIImage(systemName: "car")
+            carImage.image = UIImage(systemName: "camera")
+            carImage.contentMode = .scaleAspectFit
         }
         
     }

@@ -11,6 +11,7 @@ import UIKit
 protocol LocalRepositoryProtocol {
     func fetchCars(completion: @escaping ([Car]?, LocalDataError?) -> Void )
     func deleteCar(car: Car, completion: @escaping (LocalDataError?) -> Void )
+    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String, image: UIImage?, completion: @escaping (LocalDataError?) -> Void )
 }
 
 class LocalRepository: LocalRepositoryProtocol {

@@ -41,7 +41,7 @@ class DetailViewController: UIViewController {
     
     private lazy var roundedImageView: UIImageView = {
         let element = UIImageView()
-        let image = UIImage(systemName: "car")?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(systemName: "camera")?.withRenderingMode(.alwaysTemplate)
         element.backgroundColor = UIColor(named: "Background")
         element.translatesAutoresizingMaskIntoConstraints = false
         element.contentMode = .scaleAspectFit

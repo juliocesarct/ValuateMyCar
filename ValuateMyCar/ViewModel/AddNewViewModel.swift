@@ -10,9 +10,11 @@ import Combine
 import UIKit
 
 protocol AddNewViewModelProtocol {
+    func getReferences()
     func getBrands()
     func getModelsByBrand(brand: Brand)
     func getYearsByModel(brand: Brand, model: Model)
+    func saveCar(brand: Brand, model: Model, year: YearModel, nickname: String, image: UIImage?)
 }
 
 class AddNewViewModel: AddNewViewModelProtocol {
@@ -107,10 +109,6 @@ class AddNewViewModel: AddNewViewModelProtocol {
                 self.errorString = error?.localizedDescription ?? "Unknown error"
             }
         }
-    }
-    
-    func saveImage(){
-        
     }
     
     init(){

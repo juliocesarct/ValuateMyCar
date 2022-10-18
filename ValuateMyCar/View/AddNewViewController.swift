@@ -51,6 +51,8 @@ class AddNewViewController: UIViewController {
         return element
     }()
     
+    private var selectedImage: UIImage? = nil
+    
     private lazy var selectImageButton: UIButton = {
         let element = UIButton()
         element.layer.masksToBounds = true
@@ -160,6 +162,7 @@ extension AddNewViewController: UIImagePickerControllerDelegate, UINavigationCon
     
         roundedImage.contentMode = .scaleAspectFill
         roundedImage.image = image
+        selectedImage = image
         
     }
 
@@ -199,7 +202,7 @@ extension AddNewViewController {
     
     @objc func saveAction() {
         
-        addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "", image: roundedImage.image)
+        addNewVM.saveCar(brand: addNewVM.brands[brandIndexSelected], model: addNewVM.models[modelIndexSelected], year: addNewVM.yearModel[yearIndexSelected], nickname: nicknameTextField.text ?? "", image: selectedImage)
 
         let detailVC = DetailViewController()
         detailVC.car = addNewVM.car
