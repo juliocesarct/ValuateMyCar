@@ -10,7 +10,9 @@ import Combine
 
 class DetailViewController: UIViewController {
     
-    var car: Car!
+    weak var car: Car!
+    weak var coordinator: MainCoordinator?
+    
     private let detailVM: DetailViewModel = DetailViewModel()
     private var cancellables = Set<AnyCancellable>()
     private let activityIndicator = UIActivityIndicatorView()

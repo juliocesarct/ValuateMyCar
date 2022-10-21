@@ -11,6 +11,8 @@ import Photos
 
 class AddNewViewController: UIViewController {
     
+    weak var coordinator: MainCoordinator?
+    
     private var addNewVM = AddNewViewModel()
     private var cancellables = Set<AnyCancellable>()
     private var brands: [String] = []
@@ -48,11 +50,13 @@ class AddNewViewController: UIViewController {
         element.image = image
         element.layer.cornerRadius = 100
         element.layer.masksToBounds = true
+        element.isUserInteractionEnabled = true
+        element.addGestureRecognizer( UITapGestureRecognizer(target: self, action: #selector(selectImage)) )
         return element
     }()
     
     private var selectedImage: UIImage? = nil
-    
+     
     private lazy var selectImageButton: UIButton = {
         let element = UIButton()
         element.layer.masksToBounds = true
@@ -376,7 +380,7 @@ extension AddNewViewController {
         containerView.addSubview(saveButton)
         
         self.view.backgroundColor = UIColor(named: "Background")
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
+        navigationController?.navigationBar.topItem?.backButtonTitle = " "
         navigationController?.navigationBar.tintColor = UIColor(named: "ElementColor")
         
         NSLayoutConstraint.activate([

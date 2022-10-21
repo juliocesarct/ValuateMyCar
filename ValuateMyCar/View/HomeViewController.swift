@@ -10,6 +10,8 @@ import Combine
 
 final class HomeViewController: UIViewController {
     
+    weak var coordinator: MainCoordinator?
+    
     private var cars: [Car?] = []
     private let homeVM = HomeViewModel()
     private var cancellables = Set<AnyCancellable>()
@@ -103,8 +105,7 @@ final class HomeViewController: UIViewController {
     }
 
     @objc func navigateToPage() {
-        let addNewVC = AddNewViewController()
-        navigationController?.pushViewController(addNewVC, animated: true)
+        self.coordinator?.showAddCar()
     }
     
     func setupBinding(){
@@ -113,14 +114,10 @@ final class HomeViewController: UIViewController {
             self.cars = cars
         }.store(in: &cancellables)
         
-        homeVM.$errorString.sink { errorString in
+        homeVM.$errorString.sink { [weak self] errorString in
             if !errorString.isEmpty {
                 DispatchQueue.main.async {
-                    let errorVC = ErrorViewController()
-                    errorVC.titleLabel.text = "Error"
-                    errorVC.descriptionLabel.text = errorString
-                    self.present(errorVC, animated: false)
-                    
+                    self?.coordinator?.showError(title: "Error", description: errorString)
                 }
             }
         }.store(in: &cancellables)
@@ -145,9 +142,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let car = cars[indexPath.row] else {return}
-        let detailVC = DetailViewController()
-        detailVC.car = car
-        navigationController?.pushViewController(detailVC, animated: true)
+        coordinator?.showCarDetail(car: car)
     }
     
 }

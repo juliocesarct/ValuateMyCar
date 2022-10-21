@@ -9,6 +9,8 @@ import UIKit
 
 class ErrorViewController: UIViewController{
     
+    weak var coordinator: MainCoordinator?
+    
     private lazy var container: UIView = {
         let element = UIView()
         element.translatesAutoresizingMaskIntoConstraints = false

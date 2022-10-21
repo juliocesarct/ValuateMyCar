@@ -25,6 +25,8 @@
 		834AAA4328AFCDDF003565CA /* AddNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4228AFCDDF003565CA /* AddNewViewController.swift */; };
 		834AAA4528B02041003565CA /* AddNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4428B02041003565CA /* AddNewViewModel.swift */; };
 		834AAA4928B02600003565CA /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834AAA4828B02600003565CA /* Repository.swift */; };
+		835FEE1929030203000F03CA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835FEE1829030203000F03CA /* Coordinator.swift */; };
+		835FEE1B290302DF000F03CA /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835FEE1A290302DF000F03CA /* MainCoordinator.swift */; };
 		8363AA6C28B3B17D004B47C3 /* Reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8363AA6B28B3B17D004B47C3 /* Reference.swift */; };
 		8392454C28C632850050866F /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8392454B28C632850050866F /* ErrorViewController.swift */; };
 		8392454E28C66C680050866F /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8392454D28C66C680050866F /* ModalView.swift */; };
@@ -85,6 +87,8 @@
 		834AAA4228AFCDDF003565CA /* AddNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewViewController.swift; sourceTree = "<group>"; };
 		834AAA4428B02041003565CA /* AddNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewViewModel.swift; sourceTree = "<group>"; };
 		834AAA4828B02600003565CA /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		835FEE1829030203000F03CA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		835FEE1A290302DF000F03CA /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		8363AA6B28B3B17D004B47C3 /* Reference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reference.swift; sourceTree = "<group>"; };
 		8392454B28C632850050866F /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		8392454D28C66C680050866F /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 		83084284289AF1BE00EF8E8E /* ValuateMyCar */ = {
 			isa = PBXGroup;
 			children = (
+				835FEE17290301DC000F03CA /* Coordinator */,
 				8398CBEC28C116B6006CE582 /* Enum */,
 				8398CBEB28C113BB006CE582 /* Service */,
 				834AAA4728B025E0003565CA /* Repository */,
@@ -235,6 +240,15 @@
 				83B3ADD028C249D3000C35F7 /* LocalRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		835FEE17290301DC000F03CA /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				835FEE1829030203000F03CA /* Coordinator.swift */,
+				835FEE1A290302DF000F03CA /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		8398CBEB28C113BB006CE582 /* Service */ = {
@@ -482,6 +496,7 @@
 			files = (
 				8339605D28BE8C6C00C9665B /* DetailViewModel.swift in Sources */,
 				834AAA4928B02600003565CA /* Repository.swift in Sources */,
+				835FEE1929030203000F03CA /* Coordinator.swift in Sources */,
 				83DCE24128B51D9100CD0453 /* Brand.swift in Sources */,
 				8339605728BE472900C9665B /* Car+CoreDataProperties.swift in Sources */,
 				8363AA6C28B3B17D004B47C3 /* Reference.swift in Sources */,
@@ -504,6 +519,7 @@
 				83D2452E28C789CF006A8AB0 /* SourceType.swift in Sources */,
 				83084288289AF1BE00EF8E8E /* SceneDelegate.swift in Sources */,
 				8339605928BE61B300C9665B /* HomeViewModel.swift in Sources */,
+				835FEE1B290302DF000F03CA /* MainCoordinator.swift in Sources */,
 				83084290289AF1BE00EF8E8E /* ValuateMyCar.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
